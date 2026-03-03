@@ -83,8 +83,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     populateTimeSelect(document.querySelectorAll('.dt-hour'), 0, 23);
     populateTimeSelect(document.querySelectorAll('.dt-minute'), 0, 59);
-    populateTimeSelect([document.getElementById('lawyer-hours')], 0, 24);
+    populateTimeSelect([document.getElementById('lawyer-hours')], 0, 4);
     populateTimeSelect([document.getElementById('lawyer-minutes')], 0, 59);
+
+    // Dynamic lawyer minutes limiting (max 4 hours)
+    const lawyerHoursSelect = document.getElementById('lawyer-hours');
+    const lawyerMinutesSelect = document.getElementById('lawyer-minutes');
+    if (lawyerHoursSelect && lawyerMinutesSelect) {
+        lawyerHoursSelect.addEventListener('change', () => {
+            if (lawyerHoursSelect.value === '04') {
+                lawyerMinutesSelect.value = '00';
+                // Disable all options except '00' when 4 hours is selected
+                Array.from(lawyerMinutesSelect.options).forEach(opt => {
+                    if (opt.value && opt.value !== '00') opt.disabled = true;
+                });
+            } else {
+                // Re-enable options
+                Array.from(lawyerMinutesSelect.options).forEach(opt => {
+                    opt.disabled = false;
+                });
+            }
+        });
+    }
 
     // Set defaults on load
     initializeDefaults();
