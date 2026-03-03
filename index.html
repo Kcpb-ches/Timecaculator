@@ -70,7 +70,42 @@
                     </div>
                 </div>
                 <div class="input-group mt-3">
-                    <label>日出時間 (結束)</label>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; gap: 5px; flex-wrap: wrap;">
+                        <label style="margin: 0; display: inline-block;">日出時間 (結束)</label>
+                        <div class="auto-fetch-group" style="display: flex; gap: 0.5rem;">
+                            <select id="city-select" class="city-select"
+                                style="padding: 0.2rem 0.5rem; font-size: 0.85rem; background: rgba(0,0,0,0.6); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: var(--radius-sm); outline: none; cursor: pointer;">
+                                <option value="">自己手動選擇</option>
+                                <option value="25.1283,121.7419">基隆市</option>
+                                <option value="25.0329,121.5654">臺北市</option>
+                                <option value="25.0112,121.4653">新北市</option>
+                                <option value="24.9936,121.3010">桃園市</option>
+                                <option value="24.8143,121.0543">新竹縣</option>
+                                <option value="24.8138,120.9675">新竹市</option>
+                                <option value="24.5602,120.8214">苗栗縣</option>
+                                <option value="24.1477,120.6736">臺中市</option>
+                                <option value="24.0518,120.5393">彰化縣</option>
+                                <option value="23.9037,120.6865">南投縣</option>
+                                <option value="23.6931,120.5283">雲林縣</option>
+                                <option value="23.4518,120.2555">嘉義縣</option>
+                                <option value="23.4795,120.4414">嘉義市</option>
+                                <option value="22.9997,120.2270">臺南市</option>
+                                <option value="22.6273,120.3014">高雄市</option>
+                                <option value="22.6828,120.5132">屏東縣</option>
+                                <option value="24.7308,121.7588">宜蘭縣</option>
+                                <option value="23.9872,121.6016">花蓮縣</option>
+                                <option value="22.7583,121.1444">臺東縣</option>
+                                <option value="23.5711,119.5793">澎湖縣</option>
+                                <option value="24.4327,118.3223">金門縣</option>
+                                <option value="26.1505,119.9360">連江縣</option>
+                            </select>
+                            <button id="btn-fetch-sunrise" type="button" class="btn-clear"
+                                style="padding: 0.2rem 0.5rem; font-size: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--brand-teal); color: var(--brand-teal); background: rgba(20, 184, 166, 0.1); cursor: pointer; display: none; align-items: center; justify-content: center; margin: 0;">
+                                自動填入
+                            </button>
+                        </div>
+                    </div>
                     <div class="datetime-inputs" id="sunrise-time">
                         <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
                         <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
@@ -178,7 +213,7 @@
         </main>
     </div>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js?v=3"></script>
 </body>
 
 </html>

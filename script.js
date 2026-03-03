@@ -246,6 +246,85 @@ document.addEventListener('DOMContentLoaded', () => {
         resultCards.forEach(card => card.classList.remove('glow'));
     }
 
+    // Auto-fetch sunrise time
+    const citySelect = document.getElementById('city-select');
+    const btnFetchSunrise = document.getElementById('btn-fetch-sunrise');
+
+    if (citySelect && btnFetchSunrise) {
+        citySelect.addEventListener('change', () => {
+            if (citySelect.value) {
+                btnFetchSunrise.style.display = 'flex';
+                const sunriseMonth = document.querySelector('#sunrise-time .dt-month').value;
+                const sunriseDay = document.querySelector('#sunrise-time .dt-day').value;
+                if (sunriseMonth && sunriseDay) {
+                    btnFetchSunrise.click();
+                }
+            } else {
+                btnFetchSunrise.style.display = 'none';
+            }
+        });
+
+        document.querySelector('#sunrise-time .dt-month').addEventListener('change', () => {
+            if (citySelect.value) btnFetchSunrise.click();
+        });
+        document.querySelector('#sunrise-time .dt-day').addEventListener('change', () => {
+            if (citySelect.value) btnFetchSunrise.click();
+        });
+
+        btnFetchSunrise.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const coords = citySelect.value;
+            if (!coords) return;
+
+            const sunriseContainer = document.getElementById('sunrise-time');
+            const monthVal = sunriseContainer.querySelector('.dt-month').value;
+            const dayVal = sunriseContainer.querySelector('.dt-day').value;
+
+            if (!monthVal || !dayVal) return;
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const monthStr = String(monthVal).padStart(2, '0');
+            const dayStr = String(dayVal).padStart(2, '0');
+            const dateStr = `${year}-${monthStr}-${dayStr}`;
+
+            const [lat, lng] = coords.split(',');
+
+            const originalText = btnFetchSunrise.textContent;
+            btnFetchSunrise.textContent = '抓取中...';
+            btnFetchSunrise.disabled = true;
+
+            try {
+                const url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.status === 'OK') {
+                    const sunriseDate = new Date(data.results.sunrise);
+                    const hour = String(sunriseDate.getHours()).padStart(2, '0');
+                    const minute = String(sunriseDate.getMinutes()).padStart(2, '0');
+
+                    sunriseContainer.querySelector('.dt-hour').value = hour;
+                    sunriseContainer.querySelector('.dt-minute').value = minute;
+                    calculateResults();
+
+                    btnFetchSunrise.textContent = '✅ 已填入';
+                    setTimeout(() => {
+                        if (btnFetchSunrise.textContent === '✅ 已填入') btnFetchSunrise.textContent = originalText;
+                    }, 2500);
+                }
+            } catch (error) {
+                console.error(error);
+                btnFetchSunrise.textContent = '❌ 失敗';
+                setTimeout(() => {
+                    if (btnFetchSunrise.textContent === '❌ 失敗') btnFetchSunrise.textContent = originalText;
+                }, 2000);
+            } finally {
+                btnFetchSunrise.disabled = false;
+            }
+        });
+    }
+
     // Initial calculate trigger to set initial empty states if needed
     resetResults();
     calculateResults(); // Calculate immediately for the default arrest time
