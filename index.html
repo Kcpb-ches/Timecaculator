@@ -46,10 +46,8 @@
                             required><span>月</span>
                         <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"
                             required><span>日</span>
-                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"
-                            required><span>時</span>
-                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"
-                            required><span>分</span>
+                        <select class="dt-input dt-hour" required></select><span>時</span>
+                        <select class="dt-input dt-minute" required></select><span>分</span>
                     </div>
                     <div class="help-text">計算起算點</div>
                 </div>
@@ -67,8 +65,8 @@
                     <div class="datetime-inputs" id="night-stop-time">
                         <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
                         <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
-                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
-                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                        <select class="dt-input dt-hour"></select><span>時</span>
+                        <select class="dt-input dt-minute"></select><span>分</span>
                     </div>
                 </div>
                 <div class="input-group mt-3">
@@ -76,8 +74,8 @@
                     <div class="datetime-inputs" id="sunrise-time">
                         <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
                         <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
-                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
-                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                        <select class="dt-input dt-hour"></select><span>時</span>
+                        <select class="dt-input dt-minute"></select><span>分</span>
                     </div>
                 </div>
 
@@ -94,8 +92,8 @@
                     <div class="datetime-inputs" id="departure-time">
                         <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
                         <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
-                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
-                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                        <select class="dt-input dt-hour"></select><span>時</span>
+                        <select class="dt-input dt-minute"></select><span>分</span>
                     </div>
                 </div>
                 <div class="input-group mt-3">
@@ -103,8 +101,8 @@
                     <div class="datetime-inputs" id="arrival-time">
                         <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
                         <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
-                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
-                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                        <select class="dt-input dt-hour"></select><span>時</span>
+                        <select class="dt-input dt-minute"></select><span>分</span>
                     </div>
                 </div>
 
@@ -117,11 +115,11 @@
                 <div class="input-row lawyer-duration">
                     <div class="input-group">
                         <label for="lawyer-hours">小時</label>
-                        <input type="number" id="lawyer-hours" min="0" max="24" placeholder="0">
+                        <select id="lawyer-hours"></select>
                     </div>
                     <div class="input-group">
                         <label for="lawyer-minutes">分鐘</label>
-                        <input type="number" id="lawyer-minutes" min="0" max="59" placeholder="0">
+                        <select id="lawyer-minutes"></select>
                     </div>
                 </div>
 

@@ -62,6 +62,30 @@ document.addEventListener('DOMContentLoaded', () => {
         setDefaultDate('arrival-time', now);
     }
 
+    // Utility to populate select options
+    function populateTimeSelect(selects, min, max) {
+        selects.forEach(select => {
+            if (!select) return;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.textContent = '--';
+            select.appendChild(defaultOpt);
+
+            for (let i = min; i <= max; i++) {
+                const opt = document.createElement('option');
+                const val = String(i).padStart(2, '0');
+                opt.value = val;
+                opt.textContent = val;
+                select.appendChild(opt);
+            }
+        });
+    }
+
+    populateTimeSelect(document.querySelectorAll('.dt-hour'), 0, 23);
+    populateTimeSelect(document.querySelectorAll('.dt-minute'), 0, 59);
+    populateTimeSelect([document.getElementById('lawyer-hours')], 0, 24);
+    populateTimeSelect([document.getElementById('lawyer-minutes')], 0, 59);
+
     // Set defaults on load
     initializeDefaults();
 

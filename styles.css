@@ -265,7 +265,8 @@ header p {
 }
 
 input[type="datetime-local"],
-input[type="number"] {
+input[type="number"],
+select {
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
@@ -279,9 +280,26 @@ input[type="number"] {
 }
 
 input[type="datetime-local"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+select:focus {
     border-color: var(--brand-primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+select.dt-input {
+    width: 70px;
+    cursor: pointer;
+}
+
+select#lawyer-hours,
+select#lawyer-minutes {
+    width: 100%;
+    cursor: pointer;
+}
+
+select option {
+    background: #18181b;
+    color: #f8fafc;
 }
 
 .datetime-inputs {
