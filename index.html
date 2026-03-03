@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法定障礙時間計算機</title>
+    <!-- Google Fonts: Outfit for numbers/English, Noto Sans TC for Traditional Chinese -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Phosphorus Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="background-elements">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo-wrapper">
+                <i class="ph ph-scales logo-icon"></i>
+            </div>
+            <h1>法定障礙時間計算機</h1>
+            <p>自動計算 24 小時與 16 小時解送時限，依據刑事訴訟法第93-1條等相關規定。</p>
+        </header>
+
+        <main class="grid-layout">
+            <!-- Left panel: Form -->
+            <div class="glass-panel form-panel">
+                <div class="section-title">
+                    <i class="ph ph-clock"></i>
+                    <h2>基礎時間</h2>
+                </div>
+                <div class="input-group required">
+                    <label>逮補時間</label>
+                    <div class="datetime-inputs" id="arrest-time">
+                        <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"
+                            required><span>月</span>
+                        <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"
+                            required><span>日</span>
+                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"
+                            required><span>時</span>
+                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"
+                            required><span>分</span>
+                    </div>
+                    <div class="help-text">計算起算點</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="section-title">
+                    <i class="ph ph-moon-stars"></i>
+                    <h2>夜間停止詢問</h2>
+                    <span class="duration-label" id="night-stop-duration">(使用時間：0 小時 0 分鐘)</span>
+                </div>
+
+                <div class="input-group">
+                    <label>夜停時間 (開始)</label>
+                    <div class="datetime-inputs" id="night-stop-time">
+                        <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
+                        <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
+                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
+                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                    </div>
+                </div>
+                <div class="input-group mt-3">
+                    <label>日出時間 (結束)</label>
+                    <div class="datetime-inputs" id="sunrise-time">
+                        <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
+                        <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
+                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
+                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="section-title">
+                    <i class="ph ph-car-profile"></i>
+                    <h2>在途期間 (解送/交通)</h2>
+                    <span class="duration-label" id="transport-duration">(使用時間：0 小時 0 分鐘)</span>
+                </div>
+
+                <div class="input-group">
+                    <label>出發時間</label>
+                    <div class="datetime-inputs" id="departure-time">
+                        <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
+                        <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
+                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
+                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                    </div>
+                </div>
+                <div class="input-group mt-3">
+                    <label>抵達時間</label>
+                    <div class="datetime-inputs" id="arrival-time">
+                        <input type="number" class="dt-input dt-month" placeholder="月" min="1" max="12"><span>月</span>
+                        <input type="number" class="dt-input dt-day" placeholder="日" min="1" max="31"><span>日</span>
+                        <input type="number" class="dt-input dt-hour" placeholder="時" min="0" max="23"><span>時</span>
+                        <input type="number" class="dt-input dt-minute" placeholder="分" min="0" max="59"><span>分</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="section-title">
+                    <i class="ph ph-briefcase"></i>
+                    <h2>律師等候時間 (律停)</h2>
+                </div>
+                <div class="input-row lawyer-duration">
+                    <div class="input-group">
+                        <label for="lawyer-hours">小時</label>
+                        <input type="number" id="lawyer-hours" min="0" max="24" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="lawyer-minutes">分鐘</label>
+                        <input type="number" id="lawyer-minutes" min="0" max="59" placeholder="0">
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-group">
+                    <button class="btn-primary" id="btn-calculate">
+                        <i class="ph ph-calculator"></i> 立即計算
+                    </button>
+                    <button class="btn-clear" id="btn-clear">
+                        <i class="ph ph-trash"></i> 清除所有資料
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right panel: Results -->
+            <div class="glass-panel result-panel">
+                <div class="result-sticky">
+                    <h2>計算結果</h2>
+
+                    <div class="obstacle-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">總法定障礙時間</span>
+                            <span class="summary-value" id="total-obstacle-time">0 小時 0 分鐘</span>
+                        </div>
+                    </div>
+
+                    <div class="result-card primary">
+                        <div class="card-header">
+                            <div class="icon-wrapper prosecutor">
+                                <i class="ph ph-buildings"></i>
+                            </div>
+                            <h3>最晚解送地檢署 (16H)</h3>
+                        </div>
+                        <div class="datetime-display">
+                            <div class="date" id="prosecutor-date">--/--/----</div>
+                            <div class="time" id="prosecutor-time">--:--</div>
+                        </div>
+                        <div class="formula-hint">逮補時間 + 16小時 + 法定障礙時間</div>
+                    </div>
+
+                    <div class="result-card secondary">
+                        <div class="card-header">
+                            <div class="icon-wrapper court">
+                                <i class="ph ph-bank"></i>
+                            </div>
+                            <h3>最晚應送法院 (24H)</h3>
+                        </div>
+                        <div class="datetime-display">
+                            <div class="date" id="court-date">--/--/----</div>
+                            <div class="time" id="court-time">--:--</div>
+                        </div>
+                        <div class="formula-hint">逮補時間 + 24小時 + 法定障礙時間</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
