@@ -303,36 +303,40 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!monthVal || !dayVal) return;
 
             const now = new Date();
-            const year = now.getFullYear();
-            const monthStr = String(monthVal).padStart(2, '0');
-            const dayStr = String(dayVal).padStart(2, '0');
-            const dateStr = `${year}-${monthStr}-${dayStr}`;
+            const reqDate = new Date(now.getFullYear(), parseInt(monthVal) - 1, parseInt(dayVal));
+            const nextDate = new Date(reqDate);
+            nextDate.setDate(nextDate.getDate() + 1);
 
-            const [lat, lng] = coords.split(',');
+            const fromDateStr = `${reqDate.getFullYear()}-${String(reqDate.getMonth() + 1).padStart(2, '0')}-${String(reqDate.getDate()).padStart(2, '0')}`;
+            const toDateStr = `${nextDate.getFullYear()}-${String(nextDate.getMonth() + 1).padStart(2, '0')}-${String(nextDate.getDate()).padStart(2, '0')}`;
 
             const originalText = btnFetchSunrise.textContent;
             btnFetchSunrise.textContent = '抓取中...';
             btnFetchSunrise.disabled = true;
 
             try {
-                const url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0`;
+                const apiKey = 'CWA-D28BB60D-EFE5-4568-A308-63F3820BD9A1';
+                const url = `https://opendata.cwa.gov.tw/api/v1/rest/datastore/A-B0062-001?Authorization=${apiKey}&CountyName=${encodeURIComponent(coords)}&timeFrom=${fromDateStr}&timeTo=${toDateStr}`;
+
                 const response = await fetch(url);
                 const data = await response.json();
 
-                if (data.status === 'OK') {
-                    const sunriseDate = new Date(data.results.sunrise);
-                    const hour = String(sunriseDate.getHours()).padStart(2, '0');
-                    const minute = String(sunriseDate.getMinutes()).padStart(2, '0');
+                if (data.success && data.records.locations.location.length > 0) {
+                    const timeData = data.records.locations.location[0].time;
+                    if (timeData && timeData.length > 0) {
+                        const sunriseTimeStr = timeData[0].SunRiseTime;
+                        const [hour, minute] = sunriseTimeStr.split(':');
 
-                    sunriseContainer.querySelector('.dt-hour').value = hour;
-                    sunriseContainer.querySelector('.dt-minute').value = minute;
-                    calculateResults();
+                        sunriseContainer.querySelector('.dt-hour').value = hour;
+                        sunriseContainer.querySelector('.dt-minute').value = minute;
+                        calculateResults();
 
-                    btnFetchSunrise.textContent = '✅ 已填入';
-                    setTimeout(() => {
-                        if (btnFetchSunrise.textContent === '✅ 已填入') btnFetchSunrise.textContent = originalText;
-                    }, 2500);
-                }
+                        btnFetchSunrise.textContent = '✅ 已填入';
+                        setTimeout(() => {
+                            if (btnFetchSunrise.textContent === '✅ 已填入') btnFetchSunrise.textContent = originalText;
+                        }, 2500);
+                    } else { throw new Error('No time data found'); }
+                } else { throw new Error('API return unsuccessful'); }
             } catch (error) {
                 console.error(error);
                 btnFetchSunrise.textContent = '❌ 失敗';
